@@ -77,7 +77,7 @@ get_ptm_enzymes_from_file <- function(file_name){
   }
 
   enzymes <- get_ptm_enzymes_from_list(sites)
-  return <- sites
+  return <- enzymes
 }
 
 get_ptm_ppi_from_list <- function(items){
@@ -108,6 +108,6 @@ get_ptm_ppi_from_file <- function(file_name){
   }
 
   enzymes <- get_ptm_ppi_from_list(sites)
-  return <- sites
+  return <- enzymes
 }
 

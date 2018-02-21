@@ -1,4 +1,4 @@
-test_that("get_info returns valid data", {
+testthat::test_that("get_info returns valid data", {
   info = get_info("Q15796")
   expect_equal(is.null(info),F)
 })
