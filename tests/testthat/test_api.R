@@ -13,10 +13,12 @@ test_that("get_ptmppi returns valid data",{
   expect_equal(is.null(ptm_dep_ppi),F)
 })
 
+
 test_that("test get_ppi_for_proteoforms returns valid data",{
   ptm_dep_ppi = get_ppi_for_proteoforms("Q15796")
   expect_equal(is.null(ptm_dep_ppi),F)
 })
+
 
 test_that("get_ptm_enzymes_from_list returns valid data", {
   substrates = list(
@@ -39,6 +41,7 @@ test_that("get_ptm_enzymes_from_list returns valid data", {
   data = get_ptm_enzymes_from_list(substrates)
   expect_equal(is.null(data),F)
 })
+
 
 test_that("get_ptm_enzymes_from_file returns valid data", {
   data = get_ptm_enzymes_from_file("egfr_sites_formatted.txt")
@@ -72,12 +75,6 @@ test_that("test get_ptm_ppi_from_file returns valid data", {
   data = get_ptm_ppi_from_file("egfr_sites_formatted.txt")
   expect_equal(is.null(data),F)
 })
-
-
-
-
-
-
 
 
 
