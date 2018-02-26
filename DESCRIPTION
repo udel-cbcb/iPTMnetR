@@ -1,7 +1,7 @@
 Package: iptmnet
 Type: Package
 Title: Client library for the iPTMnet API
-Version: 0.1.1
+Version: 0.1.3
 Author: Sachin Gavali
 Maintainer: The package maintainer <saching@udel.edu>
 Description: This package makes it easier for users to communicate with the iPTMnet API

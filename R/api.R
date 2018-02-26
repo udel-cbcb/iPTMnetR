@@ -53,11 +53,13 @@ get_ptm_enzymes_from_list <- function(items){
   url <- "https://annotation.dbi.udel.edu/iptmnet/api/batch_ptm_enzymes"
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
-  result <- httr::POST(url,body=items, encode="json")
+  result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
   print(httr::status_code(result))
   if(httr::status_code(result) == 200){
-    data = httr::content(result, "parsed")
-    return <- data
+    data = httr::content(result)
+    con <- textConnection(data)
+    enzymes <- read.csv(con)
+    return <- enzymes
   }else{
     throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::content(result))))
   }
@@ -84,11 +86,13 @@ get_ptm_ppi_from_list <- function(items){
   url <- "https://annotation.dbi.udel.edu/iptmnet/api/batch_ptm_ppi"
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
-  result <- httr::POST(url,body=items, encode="json")
+  result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
   print(httr::status_code(result))
   if(httr::status_code(result) == 200){
-    data = httr::content(result, "parsed")
-    return <- data
+    data = httr::content(result)
+    con <- textConnection(data)
+    ppi <- read.csv(con)
+    return <- ppi
   }else{
     throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::content(result))))
   }
