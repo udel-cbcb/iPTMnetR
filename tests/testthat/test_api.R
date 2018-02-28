@@ -1,10 +1,12 @@
 testthat::test_that("get_info returns valid data", {
-  info = get_info("Q15796")
+  info <- get_info("Q15796")
   expect_equal(is.null(info),F)
 })
 
 test_that("get_proteoforms returns valid data",{
-  proteoforms = get_proteoforms("Q15796")
+  browser()
+   proteoforms <- get_proteoforms("Q15796")
+
   expect_equal(is.null(proteoforms),F)
 })
 

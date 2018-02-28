@@ -2,6 +2,14 @@ library(httr)
 library(jsonlite)
 
 get_info <- function(id){
+  # Get information for the given iptmnet_id
+  #
+  # Args:
+  #    id: iPTMnet ID
+  #
+  # Returns:
+  #    List containing the information for the iPTMnet ID
+
   url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/info",id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url)
@@ -9,19 +17,31 @@ get_info <- function(id){
     data = httr::content(result, "parsed")
     return <- data
   }else{
-    throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::content(result))))
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
   }
 }
 
 get_proteoforms <- function(id){
+  # Get proteoforms for the given iptmnet_id
+  #
+  # Args:
+  #    id: iPTMnet ID
+  #
+  # Returns:
+  #   Dataframe containing the proteoforms for given iPTMnet ID
+
   url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/proteoforms",id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
-  result <- httr::GET(url)
+  result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
-    data = httr::content(result, "parsed")
-    return <- data
+    data = httr::content(result)
+    con <- textConnection(data)
+    proteoforms <- read.csv(con)
+    return <- proteoforms
   }else{
-    throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::content(result))))
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
   }
 }
 
@@ -33,7 +53,8 @@ get_ptm_dependent_ppi <- function(id){
     data = httr::content(result, "parsed")
     return <- data
   }else{
-    throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::content(result))))
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
   }
 }
 
@@ -45,7 +66,8 @@ get_ppi_for_proteoforms <- function(id){
     data = httr::content(result, "parsed")
     return <- data
   }else{
-    throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::ontent(result))))
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
   }
 }
 
@@ -61,7 +83,8 @@ get_ptm_enzymes_from_list <- function(items){
     enzymes <- read.csv(con)
     return <- enzymes
   }else{
-    throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::content(result))))
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
   }
 }
 
@@ -94,7 +117,8 @@ get_ptm_ppi_from_list <- function(items){
     ppi <- read.csv(con)
     return <- ppi
   }else{
-    throw("Request failed with code : %d and Error : %s",httr::status_code(result),str((httr::content(result))))
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
   }
 }
 
@@ -114,4 +138,20 @@ get_ptm_ppi_from_file <- function(file_name){
   enzymes <- get_ptm_ppi_from_list(sites)
   return <- enzymes
 }
+
+.build_error_msg <- function(result){
+  # Build an error string from the httr result
+  #
+  # Args:
+  #   result: Result obtained after making a httr request
+  #
+  # Returns:
+  #   A string containing the error msg
+
+  content <- httr::content(result, "text")
+  code <- httr::status_code(result)
+  error_msg = sprintf("Request failed with code : %d and error : %s",code,content)
+  return <- error_msg
+}
+
 
