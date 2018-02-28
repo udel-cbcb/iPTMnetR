@@ -92,7 +92,7 @@ get_ptm_enzymes_from_list <- function(items){
 
 get_ptm_enzymes_from_file <- function(file_name){
   sites <- .sites_from_file(file_name)
-  enzymes <- get_ptm_enzymes_from_list(sites)
+  enzymes <- .get_data(sites,get_ptm_enzymes_from_list)
   return <- enzymes
 }
 
@@ -119,8 +119,8 @@ get_ptm_ppi_from_list <- function(items){
 
 get_ptm_ppi_from_file <- function(file_name){
   sites <- .sites_from_file(file_name)
-  enzymes <- get_ptm_ppi_from_list(sites)
-  return <- enzymes
+  ptm_ppi <- .get_data(sites,get_ptm_ppi_from_list)
+  return <- ptm_ppi
 }
 
 .build_error_msg <- function(result){
@@ -157,5 +157,36 @@ get_ptm_ppi_from_file <- function(file_name){
     sites[[length(sites)+1]] <- site
   }
   return <- sites
+}
+
+.get_data <- function(sites,get_data_func){
+  if(length(sites) <= 1000){
+    data <- get_data_func(sites)
+    return <- data
+  }else {
+    # get the first 1000
+    data <- NULL
+
+    loops = length(sites) %/% 1000
+    for(index in 0:(loops-1)){
+      start_index <- (index*1000)+1
+      end_index <- start_index + 999
+      sub_sites <- sites[start_index:end_index]
+      if(index == 0){
+        data <- get_data_func(sub_sites)
+      }else{
+        data <- rbind(data,get_data_func(sub_sites))
+      }
+    }
+
+    remainders = length(sites)%%1000
+    if(remainders != 0){
+      start_index <- (loops*1000)+1
+      end_index <- length(sites)
+      data <- rbind(data,get_data_func(sites[start_index:end_index]))
+    }
+
+    return <- data
+  }
 }
 
