@@ -35,9 +35,7 @@ get_proteoforms <- function(id){
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
-    data = httr::content(result)
-    con <- textConnection(data)
-    proteoforms <- read.csv(con)
+    proteoforms <- .to_dataframe(httr::content(result,"text"))
     return <- proteoforms
   }else{
     error_msg = .build_error_msg(result)
@@ -48,10 +46,10 @@ get_proteoforms <- function(id){
 get_ptm_dependent_ppi <- function(id){
   url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/ptmppi",id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
-  result <- httr::GET(url)
+  result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
-    data = httr::content(result, "parsed")
-    return <- data
+    ptmppi <- .to_dataframe(httr::content(result,"text"))
+    return <- ptmppi
   }else{
     error_msg = .build_error_msg(result)
     stop(error_msg)
@@ -61,10 +59,10 @@ get_ptm_dependent_ppi <- function(id){
 get_ppi_for_proteoforms <- function(id){
   url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/proteoformppi",id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
-  result <- httr::GET(url)
+  result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
-    data = httr::content(result, "parsed")
-    return <- data
+    ppi_proteoforms = .to_dataframe(httr::content(result,"text"))
+    return <- ppi_proteoforms
   }else{
     error_msg = .build_error_msg(result)
     stop(error_msg)
@@ -74,9 +72,13 @@ get_ppi_for_proteoforms <- function(id){
 get_ptm_enzymes_from_list <- function(items){
   url <- "https://annotation.dbi.udel.edu/iptmnet/api/batch_ptm_enzymes"
   httr::set_config(httr::config(ssl_verifypeer = 0L))
+
+  # convert the sites to json
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
+
+  # send the request
   result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
-  print(httr::status_code(result))
+
   if(httr::status_code(result) == 200){
     data = httr::content(result)
     con <- textConnection(data)
@@ -89,18 +91,7 @@ get_ptm_enzymes_from_list <- function(items){
 }
 
 get_ptm_enzymes_from_file <- function(file_name){
-  data <- read.csv(file_name, sep="\t", header = F)
-  sites <- list()
-  rows = nrow(data)
-  for(row in 1:rows){
-    item = data[row,]
-    ac = item$V1
-    residue = item$V2
-    position = toString(item$V3)
-    site <- list(substrate_ac=ac,site_residue=residue,site_position=position)
-    sites[[length(sites)+1]] <- site
-  }
-
+  sites <- .sites_from_file(file_name)
   enzymes <- get_ptm_enzymes_from_list(sites)
   return <- enzymes
 }
@@ -108,9 +99,13 @@ get_ptm_enzymes_from_file <- function(file_name){
 get_ptm_ppi_from_list <- function(items){
   url <- "https://annotation.dbi.udel.edu/iptmnet/api/batch_ptm_ppi"
   httr::set_config(httr::config(ssl_verifypeer = 0L))
+
+  # convert the sites to json
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
+
+  # send the request
   result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
-  print(httr::status_code(result))
+
   if(httr::status_code(result) == 200){
     data = httr::content(result)
     con <- textConnection(data)
@@ -123,18 +118,7 @@ get_ptm_ppi_from_list <- function(items){
 }
 
 get_ptm_ppi_from_file <- function(file_name){
-  data <- read.csv(file_name, sep="\t", header = F)
-  sites <- list()
-  rows = nrow(data)
-  for(row in 1:rows){
-    item = data[row,]
-    ac = item$V1
-    residue = item$V2
-    position = toString(item$V3)
-    site <- list(substrate_ac=ac,site_residue=residue,site_position=position)
-    sites[[length(sites)+1]] <- site
-  }
-
+  sites <- .sites_from_file(file_name)
   enzymes <- get_ptm_ppi_from_list(sites)
   return <- enzymes
 }
@@ -154,4 +138,24 @@ get_ptm_ppi_from_file <- function(file_name){
   return <- error_msg
 }
 
+.to_dataframe <- function(data) {
+  con <- textConnection(data)
+  dataframe <- read.csv(con)
+  return <- dataframe
+}
+
+.sites_from_file <- function(file_name){
+  data <- read.csv(file_name, sep="\t", header = F)
+  sites <- list()
+  rows = nrow(data)
+  for(row in 1:rows){
+    item = data[row,]
+    ac = item$V1
+    residue = item$V2
+    position = toString(item$V3)
+    site <- list(substrate_ac=ac,site_residue=residue,site_position=position)
+    sites[[length(sites)+1]] <- site
+  }
+  return <- sites
+}
 
