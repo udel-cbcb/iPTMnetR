@@ -1,24 +1,26 @@
 testthat::test_that("get_info returns valid data", {
-  info = get_info("Q15796")
+  info <- get_info("Q15796")
   expect_equal(is.null(info),F)
 })
 
 test_that("get_proteoforms returns valid data",{
-  proteoforms = get_proteoforms("Q15796")
-  expect_equal(is.null(proteoforms),F)
+  proteoforms <- get_proteoforms("Q15796")
+  row_count <- nrow(proteoforms)
+  cd <- row_count != 0
+  expect_equal(cd,TRUE)
 })
 
 test_that("get_ptmppi returns valid data",{
   ptm_dep_ppi = get_ptm_dependent_ppi("Q15796")
-  expect_equal(is.null(ptm_dep_ppi),F)
+  row_count <- nrow(ptm_dep_ppi)
+  expect_equal(row_count != 0,TRUE)
 })
-
 
 test_that("test get_ppi_for_proteoforms returns valid data",{
   ptm_dep_ppi = get_ppi_for_proteoforms("Q15796")
-  expect_equal(is.null(ptm_dep_ppi),F)
+  row_count <- nrow(ptm_dep_ppi)
+  expect_equal(row_count != 0,TRUE)
 })
-
 
 test_that("get_ptm_enzymes_from_list returns valid data", {
   substrates = list(
@@ -39,15 +41,15 @@ test_that("get_ptm_enzymes_from_list returns valid data", {
     )
   )
   data = get_ptm_enzymes_from_list(substrates)
-  expect_equal(is.null(data),F)
+  row_count <- nrow(data)
+  expect_equal(row_count != 0,TRUE)
 })
-
 
 test_that("get_ptm_enzymes_from_file returns valid data", {
   data = get_ptm_enzymes_from_file("egfr_sites_formatted.txt")
-  expect_equal(is.null(data),F)
+  row_count <- nrow(data)
+  expect_equal(row_count != 0,TRUE)
 })
-
 
 test_that("test get_ptm_ppi_from_list returns valid data", {
   substrates = list(
@@ -68,12 +70,14 @@ test_that("test get_ptm_ppi_from_list returns valid data", {
     )
   )
   data = get_ptm_ppi_from_list(substrates)
-  expect_equal(is.null(data),F)
+  row_count <- nrow(data)
+  expect_equal(row_count != 0,TRUE)
 })
 
 test_that("test get_ptm_ppi_from_file returns valid data", {
   data = get_ptm_ppi_from_file("egfr_sites_formatted.txt")
-  expect_equal(is.null(data),F)
+  row_count <- nrow(data)
+  expect_equal(row_count != 0,TRUE)
 })
 
 
