@@ -1,6 +1,15 @@
+set_host_url("http://127.0.0.1:8080")
+
 testthat::test_that("get_info returns valid data", {
   info <- get_info("Q15796")
   expect_equal(is.null(info),F)
+})
+
+testthat::test_that("search returns valid data", {
+  search_results <- search("Smad2",TermType()$ProteinOrGeneName,Role()$EnzymeOrSubstrate)
+  row_count <- nrow(search_results)
+  cd <- row_count != 0
+  expect_equal(cd,TRUE)
 })
 
 test_that("get_proteoforms returns valid data",{

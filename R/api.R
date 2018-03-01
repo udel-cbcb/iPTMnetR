@@ -1,6 +1,12 @@
 library(httr)
 library(jsonlite)
 
+host_url <<- "https://annotation.dbi.udel.edu/iptmnet/api"
+
+set_host_url <- function(url){
+  host_url <<- url
+}
+
 get_info <- function(id){
   # Get information for the given iptmnet_id
   #
@@ -10,12 +16,41 @@ get_info <- function(id){
   # Returns:
   #    List containing the information for the iPTMnet ID
 
-  url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/info",id)
-  httr::set_config(httr::config(ssl_verifypeer = 0L))
+  url <- sprintf("%s/%s/info",host_url,id)
   result <- httr::GET(url)
   if(httr::status_code(result) == 200){
     data = httr::content(result, "parsed")
     return <- data
+  }else{
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
+  }
+}
+
+search <- function(search_term,term_type,role,ptm_vector=c(),organism_vector=c()){
+  # Searches iPTMNet with the given search parameters
+  #
+  # Args:
+  #    search_term: Search Term
+  #    term_type: The type of search tem. Example - TermType()$.UniProtID,
+  #    role: The role to filter by. Example - Role()$Enzyme
+  #    pmt_vector: A vector containing the PTM's to filter by. Example - c(PTMType()$Acetylation,PTMType()$Phosphorylation)
+  #    orgnism_vector: A vector containing organisms taxon code
+  # Returns:
+  #    A dataframe with search results
+
+  query_params <- list(
+    search_term=search_term,
+    term_type=term_type,
+    ptm_type=ptm_vector,
+    role=role,
+    organism=organism_vector
+  )
+  url <- sprintf("%s/search",host_url)
+  result <- httr::GET(url,query=query_params,add_headers("Accept"="text/plain"))
+  if(httr::status_code(result) == 200){
+    search_results <- .to_dataframe(httr::content(result,"text"))
+    return <- search_results
   }else{
     error_msg = .build_error_msg(result)
     stop(error_msg)
@@ -31,8 +66,7 @@ get_proteoforms <- function(id){
   # Returns:
   #   Dataframe containing the proteoforms for given iPTMnet ID
 
-  url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/proteoforms",id)
-  httr::set_config(httr::config(ssl_verifypeer = 0L))
+  url <- sprintf("%s/%s/proteoforms",host_url,id)
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
     proteoforms <- .to_dataframe(httr::content(result,"text"))
@@ -44,7 +78,7 @@ get_proteoforms <- function(id){
 }
 
 get_ptm_dependent_ppi <- function(id){
-  url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/ptmppi",id)
+  url <- sprintf("%s/%s/ptmppi",host_url,id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
@@ -57,7 +91,7 @@ get_ptm_dependent_ppi <- function(id){
 }
 
 get_ppi_for_proteoforms <- function(id){
-  url <- sprintf("https://annotation.dbi.udel.edu/iptmnet/api/%s/proteoformppi",id)
+  url <- sprintf("%s/%s/proteoformppi",host_url,id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
@@ -70,7 +104,7 @@ get_ppi_for_proteoforms <- function(id){
 }
 
 get_ptm_enzymes_from_list <- function(items){
-  url <- "https://annotation.dbi.udel.edu/iptmnet/api/batch_ptm_enzymes"
+  url <- sprintf("%s/batch_ptm_enzymes",host_url)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
 
   # convert the sites to json
@@ -97,7 +131,7 @@ get_ptm_enzymes_from_file <- function(file_name){
 }
 
 get_ptm_ppi_from_list <- function(items){
-  url <- "https://annotation.dbi.udel.edu/iptmnet/api/batch_ptm_ppi"
+  url <- sprintf("%s/batch_ptm_ppi",host_url)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
 
   # convert the sites to json
@@ -121,6 +155,40 @@ get_ptm_ppi_from_file <- function(file_name){
   sites <- .sites_from_file(file_name)
   ptm_ppi <- .get_data(sites,get_ptm_ppi_from_list)
   return <- ptm_ppi
+}
+
+TermType <- function(){
+  return <- list(
+    ALL = "All",
+    UniprotID = "UniprotID",
+    ProteinOrGeneName = "Protein/Gene Name",
+    PMID = "PMID"
+  )
+}
+
+Role <- function() {
+  return <- list(
+    EnzymeOrSubstrate = "Enzyme or Substrate",
+    Enzyme = "Enzyme",
+    Substrate = "Substrate",
+    EnzymeAndSubstrate = "Enzyme and Substrate"
+  )
+}
+
+PTMTypes <- function() {
+  return <- list(
+    Acetylation="Acetylation",
+    CGlycosylation="C-Glycosylation",
+    Myristoylation="Myristoylation",
+    Ubiquitination="Ubiquitination",
+    NGlycosylation="N-Glycosylation",
+    SGlycosylation="S-Glycosylation",
+    Phosphorylation="Phosphorylation",
+    SNitrosylation="S-Nitrosylation",
+    OGlycosylation="O-Glycosylation",
+    Methylation="Methylation",
+    Sumoylation="Sumoylation"
+  )
 }
 
 .build_error_msg <- function(result){
@@ -189,4 +257,8 @@ get_ptm_ppi_from_file <- function(file_name){
     return <- data
   }
 }
+
+
+
+
 
