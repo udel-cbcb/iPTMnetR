@@ -132,7 +132,7 @@ get_ptm_enzymes_from_list <- function(items){
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
 
   # send the request
-  result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
+  result <- httr::POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
 
   if(httr::status_code(result) == 200){
     data = httr::content(result)
@@ -159,7 +159,7 @@ get_ptm_ppi_from_list <- function(items){
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
 
   # send the request
-  result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
+  result <- httr::POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
 
   if(httr::status_code(result) == 200){
     data = httr::content(result)
