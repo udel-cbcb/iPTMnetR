@@ -12,6 +12,13 @@ testthat::test_that("search returns valid data", {
   expect_equal(cd,TRUE)
 })
 
+test_that("get_substrates returns valid data",{
+  substrates <- get_substrates("Q15796")
+  row_count <- nrow(substrates)
+  cd <- row_count != 0
+  expect_equal(cd,TRUE)
+})
+
 test_that("get_proteoforms returns valid data",{
   proteoforms <- get_proteoforms("Q15796")
   row_count <- nrow(proteoforms)

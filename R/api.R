@@ -57,6 +57,27 @@ search <- function(search_term,term_type,role,ptm_vector=c(),organism_vector=c()
   }
 }
 
+
+get_substrates <- function(id){
+  # Get substrates for the given iptmnet_id
+  #
+  # Args:
+  #    id: iPTMnet ID
+  #
+  # Returns:
+  #   Dataframe containing the substrates for given iPTMnet ID
+
+  url <- sprintf("%s/%s/substrate",host_url,id)
+  result <- httr::GET(url,add_headers("Accept"="text/plain"))
+  if(httr::status_code(result) == 200){
+    proteoforms <- .to_dataframe(httr::content(result,"text"))
+    return <- proteoforms
+  }else{
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
+  }
+}
+
 get_proteoforms <- function(id){
   # Get proteoforms for the given iptmnet_id
   #
