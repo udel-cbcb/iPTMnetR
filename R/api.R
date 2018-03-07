@@ -85,7 +85,7 @@ get_proteoforms <- function(id){
   #    id: iPTMnet ID
   #
   # Returns:
-  #   Dataframe containing the proteoforms for given iPTMnet ID
+  #   Dataframe 
 
   url <- sprintf("%s/%s/proteoforms",host_url,id)
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
@@ -99,6 +99,13 @@ get_proteoforms <- function(id){
 }
 
 get_ptm_dependent_ppi <- function(id){
+  # Get Post translational modification(PTM) dependent Protein-Protein interactions for the given iptmnet_
+  #
+  # Args:
+  #    id: iPTMnet ID
+  #
+  # Returns:
+  #   Dataframe 
   url <- sprintf("%s/%s/ptmppi",host_url,id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
@@ -112,6 +119,13 @@ get_ptm_dependent_ppi <- function(id){
 }
 
 get_ppi_for_proteoforms <- function(id){
+  # Get Protein-Protein interactions along with corresponding proteoforms for the given iPTMnet ID
+  #
+  # Args:
+  #    id: ID of the proteoform
+  #
+  # Returns:
+  #   Dataframe 
   url <- sprintf("%s/%s/proteoformppi",host_url,id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))

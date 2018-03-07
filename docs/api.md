@@ -76,7 +76,7 @@ get_info("Q15697")
 
 
 ## get_msa
-Not implemented yet
+`Not implemented yet`
 
 ## get_proteoforms
 Get proteoforms for the given iptmnet_id
@@ -89,11 +89,7 @@ get_proteoforms(id="iptmnet_id")
 ### Arguments
 | Name | Description |
 |-|-|
-| __search_term__| The term that you want to search in the database |
-|__term_type__| The type of the term that is being searched. It can be `All`,`UniprotID`,`Protein/Gene Name`,`PMID` |
-|__role__| The role to be filtered upon. It can be `Enzyme or Substrate`,`Enzyme`,`Substrate`,`Enzyme and Substrate` |
-|__ptm_vector__| A vector containing ptm types to filter upon. It can contain following values `Acetylation`,`C-Glycosylation`,`Myristoylation`,`Ubiquitination`,`N-Glycosylation`,`S-Glycosylation`,`Phosphorylation`,`S-Nitrosylation`,`O-Glycosylation`,`Methylation`,`Sumoylation`. Passing an empty vector will match against all possible values. |
-|__organism_vector__| A vector containing taxon codes for orgaism to filter upon. |
+| __id__| iPTMnet ID |
 
 ### Example
 ``` r
@@ -109,12 +105,103 @@ PR:000025935 | hSMAD2/iso:1/Phos:2 | pT8,pT220,pS245,pS250,pS255 | PR:000026189 
 
 
 ## get_ptm_dependent_ppi
+Get Post translational modification(PTM) dependent Protein-Protein interactions for the given iptmnet_id
+
+### Usage
+``` r
+get_ptm_dependent_ppi(id="iptmnet_id")
+```
+
+### Arguments
+| Name | Description |
+|-|-|
+| __id__| iPTMnet ID |
+
+### Example
+``` r
+get_ptm_dependent_ppi("Q15796")
+```
+
+### Output
+ptm_type | substrate_uniprot_id | substrate_name | site | interactant_uniprot_id | interactant_name | association_type | source | pmid
+--- | --- | --- | --- | --- | --- | --- | --- | --- |
+Phosphorylation | P49841 | GSK3B | S9 | Q15796 | SMAD2 | increased_association | eFIP | 21996745 | 
+Phosphorylation | Q15796 | SMAD2 | S467 | Q13485 | SMAD4 | association | eFIP | 9346908 | 
 
 ## get_ppi_for_proteoforms
+Get Protein-Protein interactions along with corresponding proteoforms for the given iPTMnet ID
+
+### Usage
+``` r
+get_ppi_for_proteoforms(id="iptmnet_id")
+```
+
+### Arguments
+| Name | Description |
+|-|-|
+| __id__| iPTMnet ID |
+
+### Example
+``` r
+get_ppi_for_proteoforms("Q15796")
+```
+
+### Output
+protein_1_pro_id | protein_1_label | relation | protein_2_pro_id | protein_2_label | source | pmids
+--- | --- | --- | --- | --- | --- | --- | --- |
+PR:000025934 | hSMAD2/iso:1/Phos:1 | Interaction | PR:Q13485 | hSMAD4 | PRO | 9311995 
+PR:000025935 | hSMAD2/iso:1/Phos:2 | Interaction | PR:Q13485 | hSMAD4 | PRO | 12193595
+PR:000045371 | hSMAD2/iso:1/UnPhos:1 | Interaction | |  | PRO | 8980228
+
 
 ## get_ptm_enzymes_from_list
+Get PTM enzymes from a list of sites.
+
+
+### Usage
+``` r
+get_ptm_enzymes_from_list(sites=list())
+```
+
+### Arguments
+| Name | Description |
+|-|-|
+| __sites__| list of sites. Each site should have the following attributes: `substrate_ac`, `site_residue`, `site_position` |
+
+### Example
+``` r
+# create a list of sites
+sites = list(
+    list(
+      substrate_ac="Q15796",
+      site_residue="K",
+      site_position="19"
+    ),
+    list(
+      substrate_ac="Q15796",
+      site_residue="T",
+      site_position="8"
+    ),
+    list(
+      substrate_ac="P04637",
+      site_residue="K",
+      site_position="120"
+    )
+  )
+  
+# perform the query
+get_ptm_enzymes_from_list(sites)
+```
+
+### Output
+ptm_type | site | site_position | score | source | pmid | enz_name | enz_id | sub_name | sub_id |
+--- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+Acetylation | K120 | 120 | 2 | UniProt | 23431171 | KAT6A | Q92794 | TP53 | P04637 |
+Phosphorylation | T8 | 8 | 3 | nextProt | 19201832,15241418 | CDK2 | P24941 | SMAD2 | Q15796 | 
+
 
 ## get_ptm_enzymes_from_file
+
 
 ## get_ptm_ppi_from_list
 

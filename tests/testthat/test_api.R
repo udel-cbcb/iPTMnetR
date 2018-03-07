@@ -21,7 +21,6 @@ test_that("get_substrates returns valid data",{
 
 test_that("get_proteoforms returns valid data",{
   proteoforms <- get_proteoforms("Q15796")
-  browser()
   row_count <- nrow(proteoforms)
   cd <- row_count != 0
   expect_equal(cd,TRUE)
@@ -34,8 +33,8 @@ test_that("get_ptmppi returns valid data",{
 })
 
 test_that("test get_ppi_for_proteoforms returns valid data",{
-  ptm_dep_ppi = get_ppi_for_proteoforms("Q15796")
-  row_count <- nrow(ptm_dep_ppi)
+  ppi = get_ppi_for_proteoforms("Q15796")
+  row_count <- nrow(ppi)
   expect_equal(row_count != 0,TRUE)
 })
 
@@ -58,6 +57,7 @@ test_that("get_ptm_enzymes_from_list returns valid data", {
     )
   )
   data = get_ptm_enzymes_from_list(substrates)
+  browser()
   row_count <- nrow(data)
   expect_equal(row_count != 0,TRUE)
 })
