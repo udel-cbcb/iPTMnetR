@@ -155,7 +155,7 @@ PR:000045371 | hSMAD2/iso:1/UnPhos:1 | Interaction | |  | PRO | 8980228
 
 
 ## get_ptm_enzymes_from_list
-Get PTM enzymes from a list of sites.
+Get PTM enzymes for a list of sites.
 
 
 ### Usage
@@ -201,13 +201,37 @@ Phosphorylation | T8 | 8 | 3 | nextProt | 19201832,15241418 | CDK2 | P24941 | SM
 
 
 ## get_ptm_enzymes_from_file
+Get PTM enzymes for sites in the given csv file
 
+
+### Usage
+``` r
+get_ptm_enzymes_from_file(file_name='sites.csv')
+```
+
+### Arguments
+| Name | Description |
+|-|-|
+| __file_name__| Path to the csv file containing the list of sites . First line should be a header with following attributes: `substrate_ac`, `site_residue`, `site_position` |
+
+### Example
+``` r
+
+# perform the query
+get_ptm_enzymes_from_file("sites.csv")
+```
+
+### Output
+ptm_type | site | site_position | score | source | pmid | enz_name | enz_id | sub_name | sub_id |
+--- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+Acetylation | K120 | 120 | 2 | UniProt | 23431171 | KAT6A | Q92794 | TP53 | P04637 |
+Phosphorylation | T8 | 8 | 3 | nextProt | 19201832,15241418 | CDK2 | P24941 | SMAD2 | Q15796 | 
 
 ## get_ptm_ppi_from_list
 
 ## get_ptm_ppi_from_file
 
-## seT_host_url
+## set_host_url
 
 
 
