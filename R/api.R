@@ -17,7 +17,7 @@ get_info <- function(id){
   # Returns:
   #    List containing the information for the iPTMnet ID
 
-  url <- sprintf("%s/%s/info",iptmnet::host_url,id)
+  url <- sprintf("%s/%s/info",host_url,id)
   result <- httr::GET(url)
   if(httr::status_code(result) == 200){
     data = httr::content(result, "parsed")
