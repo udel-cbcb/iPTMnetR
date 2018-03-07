@@ -1,4 +1,4 @@
-set_host_url("http://127.0.0.1:8080")
+#set_host_url("http://127.0.0.1:8080")
 
 testthat::test_that("get_info returns valid data", {
   info <- get_info("Q15796")
@@ -21,6 +21,7 @@ test_that("get_substrates returns valid data",{
 
 test_that("get_proteoforms returns valid data",{
   proteoforms <- get_proteoforms("Q15796")
+  browser()
   row_count <- nrow(proteoforms)
   cd <- row_count != 0
   expect_equal(cd,TRUE)
