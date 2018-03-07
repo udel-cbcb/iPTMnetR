@@ -49,7 +49,7 @@ search("Smad2",TermType()$ProteinOrGeneName,Role()$EnzymeOrSubstrate)
 Type : `dataframe`
 
 iptm_id | protein_name | gene_name | synonyms | organism_taxon_code | organism_species | organism_common_name | substrate_role | substrate_num | enzyme_role | enzyme_num | ptm_dependent_ppi_role | ptm_dep_ppi_num | sites | isoforms
---- | --- | ---  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- 
+--- | --- | ---  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- 
 O70436 | Mothers against decapentaplegic homolog 2; | Smad2 | Madh2 | 10116 | Rattus norvegicus | Rat | True | 0 | False | 0 | False | 0 | 6 | 0
 Q1W668 | Mothers against decapentaplegic homolog 2; | SMAD2 |  | 9913 | Bos taurus | Bovine | True | 0 | False | 0 | False | 0 | 4 | 0
 
@@ -68,7 +68,3 @@ ptm_type | site | site_position | score | source | pmid | enz_name | enz_id | su
 Phosphorylation | S2 | 2 | 2 | HPRD | 8898866,20068231 | PRKCB | P05771 | ANXA2 | P07355 
 Phosphorylation | S7 | 7 | 4 | HPRD,neXtPro | 20166139,12773393,20089855,17924679,11438671 | RPS6KA5 | O75582 | HMGN1 | P05114 
 Phosphorylation | T60 | 60 | 4 | neXtProt,PSP | 21355052,16081417 | SGK1 | O00141 | WNK1 | Q9H4A3
-
-
-
-
