@@ -301,6 +301,16 @@ Phosphorylation | S378 | 378 | increased_association | rlimsp | 22911849 | P0804
 
 
 ## set_host_url
+Set the URL of the iPTMnet API server. By default the client points to the public iPTMnet api server located at - `https://annotation.dbi.udel.edu/iptmnet/api`
 
+### Usage
+``` r
+set_host_url(url="http://localhost.com")
+```
+
+### Arguments
+| Name | Description |
+|-|-|
+| __url__| URL of the iPTMnet api server|
 
 
