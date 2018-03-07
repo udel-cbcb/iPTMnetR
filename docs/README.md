@@ -9,9 +9,29 @@ iPTMnetR is a thin wrapper around the rest api of iPTMnet database. It makes it 
 See the [Quick start](quickstart.md) for more details.
 
 ## Installation
+
+#### Install from CRAN
+> CRAN package is not live yet, but when it will be live you can use the following command
 ``` R
 install.packages("iptmnetr")
 ```
+
+#### Install from github
+1. Install devtools
+```
+install.packages("devtools")
+```
+
+2. Load devtools
+```
+library(devtools)
+```
+
+3. Install from github
+```
+install_github("sachinx0e/iptmnetr")
+```
+
 
 [filename](quickstart.md ':include')
 
