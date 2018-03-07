@@ -1,6 +1,6 @@
 # iPTMnetR <small>0.1</small>
 
-> A R client library for iPTMnet database
+> R client library for iPTMnet database
 
 * Simple, lightweight and easy to use
 
