@@ -86,7 +86,6 @@ test_that("test get_ptm_ppi_from_list returns valid data", {
     )
   )
   data = get_ptm_ppi_from_list(substrates)
-  browser()
   row_count <- nrow(data)
   expect_equal(row_count != 0,TRUE)
 })

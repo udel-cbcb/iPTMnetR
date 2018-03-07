@@ -7,6 +7,7 @@ set_host_url <- function(url){
   host_url <<- url
 }
 
+
 get_info <- function(id){
   # Get information for the given iptmnet_id
   #
@@ -16,7 +17,7 @@ get_info <- function(id){
   # Returns:
   #    List containing the information for the iPTMnet ID
 
-  url <- sprintf("%s/%s/info",host_url,id)
+  url <- sprintf("%s/%s/info",iptmnet::host_url,id)
   result <- httr::GET(url)
   if(httr::status_code(result) == 200){
     data = httr::content(result, "parsed")
@@ -85,7 +86,7 @@ get_proteoforms <- function(id){
   #    id: iPTMnet ID
   #
   # Returns:
-  #   Dataframe 
+  #   Dataframe
 
   url <- sprintf("%s/%s/proteoforms",host_url,id)
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
@@ -105,7 +106,7 @@ get_ptm_dependent_ppi <- function(id){
   #    id: iPTMnet ID
   #
   # Returns:
-  #   Dataframe 
+  #   Dataframe
   url <- sprintf("%s/%s/ptmppi",host_url,id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
@@ -125,7 +126,7 @@ get_ppi_for_proteoforms <- function(id){
   #    id: ID of the proteoform
   #
   # Returns:
-  #   Dataframe 
+  #   Dataframe
   url <- sprintf("%s/%s/proteoformppi",host_url,id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
