@@ -57,6 +57,27 @@ search <- function(search_term,term_type,role,ptm_vector=c(),organism_vector=c()
   }
 }
 
+
+get_substrates <- function(id){
+  # Get substrates for the given iptmnet_id
+  #
+  # Args:
+  #    id: iPTMnet ID
+  #
+  # Returns:
+  #   Dataframe containing the substrates for given iPTMnet ID
+
+  url <- sprintf("%s/%s/substrate",host_url,id)
+  result <- httr::GET(url,add_headers("Accept"="text/plain"))
+  if(httr::status_code(result) == 200){
+    proteoforms <- .to_dataframe(httr::content(result,"text"))
+    return <- proteoforms
+  }else{
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
+  }
+}
+
 get_proteoforms <- function(id){
   # Get proteoforms for the given iptmnet_id
   #
@@ -111,7 +132,7 @@ get_ptm_enzymes_from_list <- function(items){
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
 
   # send the request
-  result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
+  result <- httr::POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
 
   if(httr::status_code(result) == 200){
     data = httr::content(result)
@@ -138,7 +159,7 @@ get_ptm_ppi_from_list <- function(items){
   json_data <- jsonlite::toJSON(items, pretty=TRUE)
 
   # send the request
-  result <- httr::POST(url,body=items, encode="json",add_headers("Content-Type"="text/plain"))
+  result <- httr::POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
 
   if(httr::status_code(result) == 200){
     data = httr::content(result)

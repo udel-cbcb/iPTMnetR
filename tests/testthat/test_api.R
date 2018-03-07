@@ -12,6 +12,13 @@ testthat::test_that("search returns valid data", {
   expect_equal(cd,TRUE)
 })
 
+test_that("get_substrates returns valid data",{
+  substrates <- get_substrates("Q15796")
+  row_count <- nrow(substrates)
+  cd <- row_count != 0
+  expect_equal(cd,TRUE)
+})
+
 test_that("get_proteoforms returns valid data",{
   proteoforms <- get_proteoforms("Q15796")
   row_count <- nrow(proteoforms)
@@ -55,7 +62,7 @@ test_that("get_ptm_enzymes_from_list returns valid data", {
 })
 
 test_that("get_ptm_enzymes_from_file returns valid data", {
-  data = get_ptm_enzymes_from_file("egfr_sites_formatted.txt")
+  data = get_ptm_enzymes_from_file("egfr_sites_formatted_long.txt")
   row_count <- nrow(data)
   expect_equal(row_count != 0,TRUE)
 })
