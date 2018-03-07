@@ -206,7 +206,7 @@ Get PTM enzymes for sites in the given csv file
 
 ### Usage
 ``` r
-get_ptm_enzymes_from_file(file_name='sites.csv')
+get_ptm_enzymes_from_file(file_name='/path/to/file.csv')
 ```
 
 ### Arguments
@@ -228,8 +228,77 @@ Acetylation | K120 | 120 | 2 | UniProt | 23431171 | KAT6A | Q92794 | TP53 | P046
 Phosphorylation | T8 | 8 | 3 | nextProt | 19201832,15241418 | CDK2 | P24941 | SMAD2 | Q15796 | 
 
 ## get_ptm_ppi_from_list
+Get Post translational modification(PTM) dependent Protein-Protein interactions(PPI) for the given list of site
+
+
+### Usage
+``` r
+get_ptm_ppi_from_list(sites=list())
+```
+
+### Arguments
+| Name | Description |
+|-|-|
+| __sites__| list of sites. Each site should have the following attributes: `substrate_ac`, `site_residue`, `site_position` |
+
+### Example
+``` r
+# create a list of sites
+sites = list(
+    list(
+      substrate_ac="Q15796",
+      site_residue="K",
+      site_position="19"
+    ),
+    list(
+      substrate_ac="Q15796",
+      site_residue="T",
+      site_position="8"
+    ),
+    list(
+      substrate_ac="P04637",
+      site_residue="K",
+      site_position="120"
+    )
+  )
+  
+# perform the query
+get_ptm_ppi_from_list(sites)
+```
+
+### Output
+ptm_type | site | site_position | association_type | source | pmids | interactant_id | interactant_name |
+--- | --- | --- | --- | --- | --- | --- | --- |
+Phosphorylation | S378 | 378 | association | rlimsp | 27462439 | Q92540 | SMG7 |
+Phosphorylation | S378 | 378 | increased_association | rlimsp | 22911849 | P08047 | SP1 |
+
 
 ## get_ptm_ppi_from_file
+Get Post translational modification(PTM) dependent Protein-Protein interactions(PPI) for sites in the given csv
+
+
+### Usage
+``` r
+get_ptm_ppi_from_file(file_name="/path/to/file.csv")
+```
+
+### Arguments
+| Name | Description |
+|-|-|
+| __file_name__| Path to the csv file containing the list of sites . First line should be a header with following attributes: `substrate_ac`, `site_residue`, `site_position` |
+
+### Example
+``` r
+# perform the query
+get_ptm_ppi_from_file("sites.csv")
+```
+
+### Output
+ptm_type | site | site_position | association_type | source | pmids | interactant_id | interactant_name |
+--- | --- | --- | --- | --- | --- | --- | --- |
+Phosphorylation | S378 | 378 | association | rlimsp | 27462439 | Q92540 | SMG7 |
+Phosphorylation | S378 | 378 | increased_association | rlimsp | 22911849 | P08047 | SP1 |
+
 
 ## set_host_url
 
