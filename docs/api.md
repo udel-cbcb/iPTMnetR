@@ -7,7 +7,7 @@ Search the iptmnet database for the given search term.
 
 #### Usage
 ``` r
-search(search_term = "term",term_type=TermType()$TYPE,Role()$ROLE,ptm_vector=c(),organism_vector=c())
+search_iptmnet(search_term = "term",term_type=TermType()$TYPE,Role()$ROLE,ptm_vector=c(),organism_vector=c())
 ```
 
 #### Arguments
