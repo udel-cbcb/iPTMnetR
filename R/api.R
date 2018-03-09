@@ -1,12 +1,21 @@
 library(httr)
 library(jsonlite)
 
-host_url <<- "https://annotation.dbi.udel.edu/iptmnet/api"
+iptmnet_env <- new.env()
+
+.onLoad <- function(libname, pkgname) {
+    set_host_url("https://annotation.dbi.udel.edu/iptmnet/api")
+}
 
 set_host_url <- function(url){
   host_url <<- url
+  assign("host_url",url, envir = iptmnet_env)
 }
 
+get_host_url <- function(){
+  url <- get("host_url",envir = iptmnet_env)
+  return <- url
+}
 
 get_info <- function(id){
   # Get information for the given iptmnet_id
@@ -293,6 +302,8 @@ PTMTypes <- function() {
     return <- data
   }
 }
+
+
 
 
 
