@@ -32,6 +32,11 @@ library(devtools)
 install_github("sachinx0e/iptmnetr")
 ```
 
+4. Load the library
+```
+library(iptmnetr)
+```
+
 
 [filename](quickstart.md ':include')
 
