@@ -29,7 +29,7 @@ library(devtools)
 
 3. Install from github
 ```
-install_github("sachinx0e/iptmnetr")
+install_github("udel-cbcb/iptmnetr")
 ```
 
 4. Load the library
