@@ -5,7 +5,7 @@
 * Simple, lightweight and easy to use
 
 
-[GitHub](https://github.com/Sachinx0e/iptmnetr)
+[GitHub](https://github.com/udel-cbcb/iptmnetr)
 [Get Started](#iptmnetr)
 
 
