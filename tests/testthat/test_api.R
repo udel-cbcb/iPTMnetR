@@ -6,7 +6,7 @@ testthat::test_that("get_info returns valid data", {
 })
 
 testthat::test_that("search returns valid data", {
-  search_results <- search("Smad2",TermType()$ProteinOrGeneName,Role()$EnzymeOrSubstrate)
+  search_results <- search_iptmnet("Smad2",TermType()$ProteinOrGeneName,Role()$EnzymeOrSubstrate)
   row_count <- nrow(search_results)
   cd <- row_count != 0
   expect_equal(cd,TRUE)

@@ -8,7 +8,6 @@ iptmnet_env <- new.env()
 }
 
 set_host_url <- function(url){
-  host_url <<- url
   assign("host_url",url, envir = iptmnet_env)
 }
 
@@ -25,8 +24,7 @@ get_info <- function(id){
   #
   # Returns:
   #    List containing the information for the iPTMnet ID
-
-  url <- sprintf("%s/%s/info",host_url,id)
+  url <- sprintf("%s/%s/info",get_host_url(),id)
   result <- httr::GET(url)
   if(httr::status_code(result) == 200){
     data = httr::content(result, "parsed")
@@ -37,7 +35,7 @@ get_info <- function(id){
   }
 }
 
-search <- function(search_term,term_type,role,ptm_vector=c(),organism_vector=c()){
+search_iptmnet <- function(search_term,term_type,role,ptm_vector=c(),organism_vector=c()){
   # Searches iPTMNet with the given search parameters
   #
   # Args:
@@ -56,7 +54,7 @@ search <- function(search_term,term_type,role,ptm_vector=c(),organism_vector=c()
     role=role,
     organism=organism_vector
   )
-  url <- sprintf("%s/search",host_url)
+  url <- sprintf("%s/search",get_host_url())
   result <- httr::GET(url,query=query_params,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
     search_results <- .to_dataframe(httr::content(result,"text"))
@@ -77,7 +75,7 @@ get_substrates <- function(id){
   # Returns:
   #   Dataframe containing the substrates for given iPTMnet ID
 
-  url <- sprintf("%s/%s/substrate",host_url,id)
+  url <- sprintf("%s/%s/substrate",get_host_url(),id)
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
     proteoforms <- .to_dataframe(httr::content(result,"text"))
@@ -97,7 +95,7 @@ get_proteoforms <- function(id){
   # Returns:
   #   Dataframe
 
-  url <- sprintf("%s/%s/proteoforms",host_url,id)
+  url <- sprintf("%s/%s/proteoforms",get_host_url(),id)
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
     proteoforms <- .to_dataframe(httr::content(result,"text"))
@@ -116,7 +114,7 @@ get_ptm_dependent_ppi <- function(id){
   #
   # Returns:
   #   Dataframe
-  url <- sprintf("%s/%s/ptmppi",host_url,id)
+  url <- sprintf("%s/%s/ptmppi",get_host_url(),id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
@@ -136,7 +134,7 @@ get_ppi_for_proteoforms <- function(id){
   #
   # Returns:
   #   Dataframe
-  url <- sprintf("%s/%s/proteoformppi",host_url,id)
+  url <- sprintf("%s/%s/proteoformppi",get_host_url(),id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
@@ -149,7 +147,7 @@ get_ppi_for_proteoforms <- function(id){
 }
 
 get_ptm_enzymes_from_list <- function(items){
-  url <- sprintf("%s/batch_ptm_enzymes",host_url)
+  url <- sprintf("%s/batch_ptm_enzymes",get_host_url())
   httr::set_config(httr::config(ssl_verifypeer = 0L))
 
   # convert the sites to json
@@ -176,7 +174,7 @@ get_ptm_enzymes_from_file <- function(file_name){
 }
 
 get_ptm_ppi_from_list <- function(items){
-  url <- sprintf("%s/batch_ptm_ppi",host_url)
+  url <- sprintf("%s/batch_ptm_ppi",get_host_url())
   httr::set_config(httr::config(ssl_verifypeer = 0L))
 
   # convert the sites to json
