@@ -1,4 +1,8 @@
+library(iptmnetr)
+context("iTPMnet API testing")
+
 #set_host_url("http://127.0.0.1:8080")
+
 
 testthat::test_that("get_info returns valid data", {
   info <- get_info("Q15796")

@@ -4,7 +4,7 @@ library(jsonlite)
 iptmnet_env <- new.env()
 
 .onLoad <- function(libname, pkgname) {
-    set_host_url("https://annotation.dbi.udel.edu/iptmnet/api")
+    set_host_url("http://aws3.proteininformationresource.org")
 }
 
 set_host_url <- function(url){
@@ -134,7 +134,7 @@ get_ppi_for_proteoforms <- function(id){
   #
   # Returns:
   #   Dataframe
-  url <- sprintf("%s/%s/proteoformppi",get_host_url(),id)
+  url <- sprintf("%s/%s/proteoformsppi",get_host_url(),id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
