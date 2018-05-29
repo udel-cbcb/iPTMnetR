@@ -25,9 +25,9 @@ get_info <- function(id){
   # Returns:
   #    List containing the information for the iPTMnet ID
   url <- sprintf("%s/%s/info",get_host_url(),id)
-  result <- httr::GET(url)
-  if(httr::status_code(result) == 200){
-    data = httr::content(result, "parsed")
+  result <- GET(url)
+  if(status_code(result) == 200){
+    data = content(result, "parsed")
     return <- data
   }else{
     error_msg = .build_error_msg(result)
@@ -55,9 +55,9 @@ search_iptmnet <- function(search_term,term_type,role,ptm_vector=c(),organism_ve
     organism=organism_vector
   )
   url <- sprintf("%s/search",get_host_url())
-  result <- httr::GET(url,query=query_params,add_headers("Accept"="text/plain"))
-  if(httr::status_code(result) == 200){
-    search_results <- .to_dataframe(httr::content(result,"text"))
+  result <- GET(url,query=query_params,add_headers("Accept"="text/plain"))
+  if(status_code(result) == 200){
+    search_results <- .to_dataframe(content(result,"text"))
     return <- search_results
   }else{
     error_msg = .build_error_msg(result)
@@ -76,9 +76,9 @@ get_substrates <- function(id){
   #   Dataframe containing the substrates for given iPTMnet ID
 
   url <- sprintf("%s/%s/substrate",get_host_url(),id)
-  result <- httr::GET(url,add_headers("Accept"="text/plain"))
-  if(httr::status_code(result) == 200){
-    proteoforms <- .to_dataframe(httr::content(result,"text"))
+  result <- GET(url,add_headers("Accept"="text/plain"))
+  if(status_code(result) == 200){
+    proteoforms <- .to_dataframe(content(result,"text"))
     return <- proteoforms
   }else{
     error_msg = .build_error_msg(result)
@@ -96,9 +96,9 @@ get_proteoforms <- function(id){
   #   Dataframe
 
   url <- sprintf("%s/%s/proteoforms",get_host_url(),id)
-  result <- httr::GET(url,add_headers("Accept"="text/plain"))
-  if(httr::status_code(result) == 200){
-    proteoforms <- .to_dataframe(httr::content(result,"text"))
+  result <- GET(url,add_headers("Accept"="text/plain"))
+  if(status_code(result) == 200){
+    proteoforms <- .to_dataframe(content(result,"text"))
     return <- proteoforms
   }else{
     error_msg = .build_error_msg(result)
@@ -115,10 +115,10 @@ get_ptm_dependent_ppi <- function(id){
   # Returns:
   #   Dataframe
   url <- sprintf("%s/%s/ptmppi",get_host_url(),id)
-  httr::set_config(httr::config(ssl_verifypeer = 0L))
-  result <- httr::GET(url,add_headers("Accept"="text/plain"))
-  if(httr::status_code(result) == 200){
-    ptmppi <- .to_dataframe(httr::content(result,"text"))
+  set_config(config(ssl_verifypeer = 0L))
+  result <- GET(url,add_headers("Accept"="text/plain"))
+  if(status_code(result) == 200){
+    ptmppi <- .to_dataframe(content(result,"text"))
     return <- ptmppi
   }else{
     error_msg = .build_error_msg(result)
@@ -135,10 +135,10 @@ get_ppi_for_proteoforms <- function(id){
   # Returns:
   #   Dataframe
   url <- sprintf("%s/%s/proteoformsppi",get_host_url(),id)
-  httr::set_config(httr::config(ssl_verifypeer = 0L))
-  result <- httr::GET(url,add_headers("Accept"="text/plain"))
-  if(httr::status_code(result) == 200){
-    ppi_proteoforms = .to_dataframe(httr::content(result,"text"))
+  set_config(config(ssl_verifypeer = 0L))
+  result <- GET(url,add_headers("Accept"="text/plain"))
+  if(status_code(result) == 200){
+    ppi_proteoforms = .to_dataframe(content(result,"text"))
     return <- ppi_proteoforms
   }else{
     error_msg = .build_error_msg(result)
@@ -148,16 +148,16 @@ get_ppi_for_proteoforms <- function(id){
 
 get_ptm_enzymes_from_list <- function(items){
   url <- sprintf("%s/batch_ptm_enzymes",get_host_url())
-  httr::set_config(httr::config(ssl_verifypeer = 0L))
+  set_config(config(ssl_verifypeer = 0L))
 
   # convert the sites to json
-  json_data <- jsonlite::toJSON(items, pretty=TRUE)
+  json_data <- toJSON(items, pretty=TRUE)
 
   # send the request
-  result <- httr::POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
+  result <- POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
 
-  if(httr::status_code(result) == 200){
-    data = httr::content(result)
+  if(status_code(result) == 200){
+    data = content(result)
     con <- textConnection(data)
     enzymes <- read.csv(con)
     return <- enzymes
@@ -175,16 +175,16 @@ get_ptm_enzymes_from_file <- function(file_name){
 
 get_ptm_ppi_from_list <- function(items){
   url <- sprintf("%s/batch_ptm_ppi",get_host_url())
-  httr::set_config(httr::config(ssl_verifypeer = 0L))
+  set_config(config(ssl_verifypeer = 0L))
 
   # convert the sites to json
-  json_data <- jsonlite::toJSON(items, pretty=TRUE)
+  json_data <- toJSON(items, pretty=TRUE)
 
   # send the request
-  result <- httr::POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
+  result <- POST(url,body=items, encode="json",add_headers("Accept"="text/plain"))
 
-  if(httr::status_code(result) == 200){
-    data = httr::content(result)
+  if(status_code(result) == 200){
+    data = content(result)
     con <- textConnection(data)
     ppi <- read.csv(con)
     return <- ppi
@@ -243,8 +243,8 @@ PTMTypes <- function() {
   # Returns:
   #   A string containing the error msg
 
-  content <- httr::content(result, "text")
-  code <- httr::status_code(result)
+  content <- content(result, "text")
+  code <- status_code(result)
   error_msg = sprintf("Request failed with code : %d and error : %s",code,content)
   return <- error_msg
 }

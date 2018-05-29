@@ -4,14 +4,11 @@ Title: Client library for the iPTMnet API
 Version: 0.1.5
 Author: Sachin Gavali
 Maintainer: The package maintainer <saching@udel.edu>
-Description: This package makes it easier for users to communicate with the iPTMnet REST API
+Description: This package makes it easier for users to communicate with the iPTMnet REST API.
 License: MIT
 Encoding: UTF-8
 LazyData: true
 Suggests: testthat
-Depends: 
-        httr,
-        jsonlite
 Imports: 
         httr,
         jsonlite
