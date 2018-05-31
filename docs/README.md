@@ -11,7 +11,6 @@ See the [Quick start](quickstart.md) for more details.
 ## Installation
 
 #### Install from CRAN
-> CRAN package is not live yet, but when it will be live you can use the following command
 ``` R
 install.packages("iptmnetr")
 ```
