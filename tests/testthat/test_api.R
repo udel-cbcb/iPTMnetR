@@ -66,6 +66,7 @@ test_that("get_ptm_enzymes_from_list returns valid data", {
 })
 
 test_that("get_ptm_enzymes_from_file returns valid data", {
+  skip_on_cran()
   data = get_ptm_enzymes_from_file("egfr_sites_formatted_long.txt")
   row_count <- nrow(data)
   expect_equal(row_count != 0,TRUE)
@@ -95,6 +96,7 @@ test_that("test get_ptm_ppi_from_list returns valid data", {
 })
 
 test_that("test get_ptm_ppi_from_file returns valid data", {
+  skip_on_cran()
   data = get_ptm_ppi_from_file("egfr_sites_formatted.txt")
   row_count <- nrow(data)
   expect_equal(row_count != 0,TRUE)
