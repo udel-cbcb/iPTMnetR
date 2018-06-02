@@ -4,10 +4,9 @@ Title: Interface to the 'iPTMnet' API
 Version: 0.1
 Author: Sachin Gavali
 Maintainer: Sachin Gavali <saching@udel.edu>
-Description: A wrapper around the 'iPTMnet' database REST API. This package makes it easier for users
-    to communicate with the 'iPTMnet' REST API. It handles all the aspects of communicating with the API,
-    which involve sending the request, checking the error codes and parsing the response in a format that
-    is ready to use.
+Description: Provides an R interface to the 'iPTMnet' database REST API. This package handles all the aspects
+    of communicating with the API, which involve sending the request, checking the error codes and parsing the
+    response in a format that is ready to use.
 License: MIT + file LICENSE
 URL: https://research.bioinformatics.udel.edu/iptmnet/, https://github.com/udel-cbcb/iptmnetr
 Encoding: UTF-8
