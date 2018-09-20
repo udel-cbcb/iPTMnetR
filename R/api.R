@@ -4,7 +4,8 @@ library(jsonlite)
 iptmnet_env <- new.env()
 
 .onLoad <- function(libname, pkgname) {
-    set_host_url("http://aws3.proteininformationresource.org")
+    set_host_url("https://research.bioinformatics.udel.edu/iptmnet/api")
+    httr::set_config(httr::config(ssl_verifypeer = FALSE))
 }
 
 #' Set the url of iPTMnet API server.
