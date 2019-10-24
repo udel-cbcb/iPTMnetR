@@ -207,6 +207,30 @@ get_ppi_for_proteoforms <- function(id){
   }
 }
 
+#' Get variants.
+#'
+#' Get variants for the given iPTMnet ID.
+#'
+#' @param id A string representing iPTMnet ID.
+#'
+#' @return A dataframe containing the variants for the given iPTMnet ID.
+#' @export
+#'
+#' @examples
+#' variants <- get_variants("Q15796")
+get_variants <- function(id){
+  url <- sprintf("%s/%s/variants",get_host_url(),id)
+  httr::set_config(httr::config(ssl_verifypeer = 0L))
+  result <- httr::GET(url,httr::add_headers("Accept"="text/plain"))
+  if(httr::status_code(result) == 200){
+    variants = .to_dataframe(httr::content(result,"text"))
+    return <- variants
+  }else{
+    error_msg = .build_error_msg(result)
+    stop(error_msg)
+  }
+}
+
 
 
 #' Get PTM Enzymes from list

@@ -36,6 +36,12 @@ test_that("get_ptmppi returns valid data",{
   expect_equal(row_count != 0,TRUE)
 })
 
+test_that("get_variants returns valid data",{
+  variants = get_variants("Q15796")
+  row_count <- nrow(variants)
+  expect_equal(row_count != 0,TRUE)
+})
+
 test_that("test get_ppi_for_proteoforms returns valid data",{
   ppi = get_ppi_for_proteoforms("Q15796")
   row_count <- nrow(ppi)
