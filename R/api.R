@@ -5,6 +5,7 @@ iptmnet_env <- new.env()
 
 .onLoad <- function(libname, pkgname) {
     set_host_url("https://research.bioinformatics.udel.edu/iptmnet/api")
+    set_api_version("v1")
     httr::set_config(httr::config(ssl_verifypeer = FALSE))
 }
 
@@ -23,8 +24,6 @@ set_host_url <- function(url){
   assign("host_url",url, envir = iptmnet_env)
 }
 
-
-
 #' Get the url of iPTMnet API server.
 #'
 #' Get the URl that is being used by the client for making the requests.
@@ -40,6 +39,34 @@ get_host_url <- function(){
 }
 
 
+#' Set the version of the API to use.
+#'
+#' This function can be used to change the version of the api to use.
+#'
+#' @param version A string representing the new iTPMnet api version.
+#'
+#' @return NULL
+#' @export
+#'
+#' @examples
+#' set_api_version("v1")
+set_api_version <- function(version){
+  assign("api_version",version, envir = iptmnet_env)
+}
+
+#' Get the version of iPTMnet API being used.
+#'
+#' Get the version of the api that is being used by the client for making the requests.
+#'
+#' @return A string representing the version being used.
+#' @export
+#'
+#' @examples
+#' version <- get_api_version()
+get_api_version <- function(){
+  version <- get("api_version",envir = iptmnet_env)
+  return <- version
+}
 
 #' Get information.
 #'
@@ -53,7 +80,7 @@ get_host_url <- function(){
 #' @examples
 #' info <- get_info("Q15796")
 get_info <- function(id){
-  url <- sprintf("%s/%s/info",get_host_url(),id)
+  url <- sprintf("%s/%s/%s/info",get_host_url(),get_api_version(),id)
   result <- httr::GET(url)
   if(httr::status_code(result) == 200){
     data = httr::content(result, "parsed")
@@ -100,7 +127,7 @@ search_iptmnet <- function(search_term,term_type,role,ptm_vector=c(),organism_ve
     role=role,
     organism=organism_vector
   )
-  url <- sprintf("%s/search",get_host_url())
+  url <- sprintf("%s/%s/search",get_host_url(),get_api_version())
   result <- httr::GET(url,query=query_params,httr::add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
     search_results <- .to_dataframe(httr::content(result,"text"))
@@ -124,7 +151,7 @@ search_iptmnet <- function(search_term,term_type,role,ptm_vector=c(),organism_ve
 #' @examples
 #' substrates <- get_substrates("Q15796")
 get_substrates <- function(id){
-  url <- sprintf("%s/%s/substrate",get_host_url(),id)
+  url <- sprintf("%s/%s/%s/substrate",get_host_url(),get_api_version(),id)
   result <- httr::GET(url,httr::add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
     proteoforms <- .to_dataframe(httr::content(result,"text"))
@@ -146,7 +173,7 @@ get_substrates <- function(id){
 #' @examples
 #' proteoforms <- get_proteoforms("Q15796")
 get_proteoforms <- function(id){
-  url <- sprintf("%s/%s/proteoforms",get_host_url(),id)
+  url <- sprintf("%s/%s/%s/proteoforms",get_host_url(),get_api_version(),id)
   result <- httr::GET(url,httr::add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
     proteoforms <- .to_dataframe(httr::content(result,"text"))
@@ -170,7 +197,7 @@ get_proteoforms <- function(id){
 #' @examples
 #' ptm_dependent_ppi <- get_ptm_dependent_ppi("Q15796")
 get_ptm_dependent_ppi <- function(id){
-  url <- sprintf("%s/%s/ptmppi",get_host_url(),id)
+  url <- sprintf("%s/%s/%s/ptmppi",get_host_url(),get_api_version(),id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,httr::add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
@@ -195,7 +222,7 @@ get_ptm_dependent_ppi <- function(id){
 #' @examples
 #' ppi_proteoforms <- get_ppi_for_proteoforms("Q15796")
 get_ppi_for_proteoforms <- function(id){
-  url <- sprintf("%s/%s/proteoformsppi",get_host_url(),id)
+  url <- sprintf("%s/%s/%s/proteoformsppi",get_host_url(),get_api_version(),id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,httr::add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
@@ -219,7 +246,7 @@ get_ppi_for_proteoforms <- function(id){
 #' @examples
 #' variants <- get_variants("Q15796")
 get_variants <- function(id){
-  url <- sprintf("%s/%s/variants",get_host_url(),id)
+  url <- sprintf("%s/%s/%s/variants",get_host_url(),get_api_version(),id)
   httr::set_config(httr::config(ssl_verifypeer = 0L))
   result <- httr::GET(url,httr::add_headers("Accept"="text/plain"))
   if(httr::status_code(result) == 200){
@@ -265,7 +292,7 @@ get_variants <- function(id){
 #'enzymes = get_ptm_enzymes_from_list(kinases)
 #'}
 get_ptm_enzymes_from_list <- function(items){
-  url <- sprintf("%s/batch_ptm_enzymes",get_host_url())
+  url <- sprintf("%s/%s/batch_ptm_enzymes",get_host_url(),get_api_version())
   httr::set_config(httr::config(ssl_verifypeer = 0L))
 
   # convert the sites to json
@@ -349,7 +376,7 @@ get_ptm_enzymes_from_file <- function(file_name){
 #'ptm_dep_ppi = get_ptm_ppi_from_list(kinases)
 #'}
 get_ptm_ppi_from_list <- function(items){
-  url <- sprintf("%s/batch_ptm_ppi",get_host_url())
+  url <- sprintf("%s/%s/batch_ptm_ppi",get_host_url(),get_api_version())
   httr::set_config(httr::config(ssl_verifypeer = 0L))
 
   # convert the sites to json

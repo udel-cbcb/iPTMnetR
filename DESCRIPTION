@@ -1,7 +1,7 @@
 Package: iptmnetr
 Type: Package
 Title: Interface to the 'iPTMnet' API
-Version: 0.1.6
+Version: 0.1.8
 Author: Sachin Gavali
 Maintainer: Sachin Gavali <saching@udel.edu>
 Description: Provides an R interface to the 'iPTMnet' database REST API, which can be used to retrieve 
