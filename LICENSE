@@ -2,32 +2,3 @@ Source Code : MIT
 Database : CC BY-NC-SA 4.0
 YEAR: 2019
 COPYRIGHT HOLDER: University of Delaware
-
-Citations for underlying data sources
-1.	Prasad, T. S. K. et al. (2009) Human Protein Reference Database - 2009 Update. Nucleic Acids Research. 37, D767-72.
-
-2.	Dinkel H, Chica C, Via A, Gould CM, Jensen LJ, Gibson TJ, Diella F. (2011 ) Nucleic Acids Res. ,39(Database issue) 261-7. doi: 10.1093/nar/gkq1104.
-
-3.	Yao Q, Ge H, Wu S, Zhang N, Chen W, Xu C, Gao J, Thelen JJ, Xu D. (2013) P3DB 3.0: From plant phosphorylation sites to protein networks. Nucleic Acids Res. 42(Database issue):D1206-D1213
-
-4.	Stark C, Breitkreutz BJ, Reguly T, Boucher L, Breitkreutz A, Tyers M. (2006) Biogrid: A General Repository for Interaction Datasets. Nucleic Acids Res., 34:D535-9.
-
-5.	Wood V, Harris MA, McDowall MD, Rutherford K, Vaughan BW, Staines DM, Aslett M, Lock A, Bähler J, Kersey PJ, Oliver SG. (2012) PomBase: a comprehensive online resource for fission yeast. Nucleic Acids Res.,40(Database issue):D695-9. Epub 2011
-
-6.	Gaudet P, Michel PA, Zahn-Zabal M, Britan A, Cusin I, Domagalski M, Duek PD, Gateau A, Gleizes A, Hinard V, Rech de Laval V, Lin JJ, Nikitin F, Schaeffer M, Teixeira D, Lane L, Bairoch A. (2017) The neXtProt knowledgebase on human proteins: 2017 update. Nucleic Acids Res., 45(D1):D177-D182 doi:10.1093/nar/gkw1062
-
-7.	Perfetto L, Briganti L, Calderone A, Cerquone Perpetuini A, Iannuccelli M, Langone F, Licata L, Marinkovic M, Mattioni A, Pavlidou T, Peluso D, Petrilli LL, Pirrò S, Posca D, Santonico E, Silvestri A, Spada F, Castagnoli L, Cesareni G. (2016) SIGNOR: a database of causal relationships between biological entities. Nucleic Acids Res.;44(D1):D548-54. doi: 10.1093/nar/gkv1048
-
-8.	Chen YJ, Lu CT, Su MG, Huang KY, Ching WC, Yang HH, Liao YC, Chen YJ, Lee TY. (2015) dbSNO 2.0: a resource for exploring structural environment, functional and disease association and regulatory network of protein S-nitrosylation. Nucleic Acids Res.,43(Database issue):D503-11. doi: 10.1093/nar/gku1176.
-
-9.	Hornbeck PV, Zhang B, Murray B, Kornhauser JM, Latham V, Skrzypek E. (2015) PhosphoSitePlus, 2014: mutations, PTMs and recalibrations. Nucleic Acids Res.,43(Database issue):D512-20. doi: 10.1093/nar/gku1267.
-
-10.	Durek P, Schmidt R, Heazlewood JL, Jones A, Maclean D, Nagel A, Kersten B, Schulze WX. (2017) PhosPhAt: the Arabidopsis thaliana phosphorylation site database. An update. Nucleic Acids Res. 38: D828-D834
-
-11.	The UniProt Consortium. ((2017) UniProt: the universal protein knowledgebase Nucleic Acids Res. 45: D158-D169
-
-12.	Paskov KM, Wong ED, Karra K, Engel SR, Cherry JM. (2017 ) Curated protein information in the Saccharomyces genome database. Database (Oxford).  doi: 10.1093/database/bax011
-
-13.	Dingerdissen HM, Torcivia-Rodriguez J, Hu Y, Chang TC, Mazumder R, Kahsay R.(2018) BioMuta and BioXpress: mutation and expression knowledgebases for cancerbiomarker discovery. Nucleic Acids Res., Jan 4;46(D1):D1128-D1136. doi:10.1093/nar/gkx907
-
-14.	Natale DA, Arighi CN, Blake JA, Bona J, Chen C, Chen SC, Christie KR, Cowart J, D'Eustachio P, Diehl AD, Drabkin HJ, Duncan WD, Huang H, Ren J, Ross K,Ruttenberg A, Shamovsky V, Smith B, Wang Q, Zhang J, El-Sayed A, Wu CH. (2017) Protein Ontology (PRO): enhancing and scaling up the representation of protein entities. Nucleic Acids Res.,45(D1):D339-D346. doi: 10.1093/nar/gkw1075
